@@ -9,8 +9,8 @@
     <relativePath>../parent</relativePath>
   </parent>
 
-  <artifactId>day01</artifactId>
-  <name>Day 01</name>
+  <artifactId>day02</artifactId>
+  <name>Day 02</name>
   <description><![CDATA[
   ]]></description>
 

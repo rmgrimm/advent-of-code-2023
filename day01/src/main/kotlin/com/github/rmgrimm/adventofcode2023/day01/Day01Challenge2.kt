@@ -1,41 +1,36 @@
 package com.github.rmgrimm.adventofcode2023.day01
 
-import com.github.rmgrimm.adventofcode2023.support.readResource
+import com.github.rmgrimm.adventofcode2023.support.readResourceLines
 
-val regexes = listOf(
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine"
-).map(Regex.Companion::fromLiteral)
+private val digits =
+    listOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+        .zip(other = (1..9).toList().map(Int::toString))
+        .map(Pair<String, String>::toList)
+
+private fun digitValueAndLinePosition(indexFn: (String) -> Int) =
+    digits
+        .flatMapIndexed { index, digitList ->
+            digitList
+                .asSequence()
+                .map(indexFn)
+                .map { (index + 1) to it }
+        }
+        .filterNot { (_, position) -> position == -1 }
 
 fun main() {
     println(
-        readResource("input")!!
-            .readText()
-            .let { input ->
-                var result = input
-                regexes.forEachIndexed { value, regex ->
-                    result = result.replace(regex, (value + 1).toString())
-                }
-                result
-            }
-            .apply {
-                println(this)
-            }
-            .lines()
-            .asSequence()
-            .map(String::trim)
-            .filter(String::isNotBlank)
+        readResourceLines("input")!!
             .map { line ->
-                line.first(Char::isDigit).toString() +
-                    line.last(Char::isDigit)
+                val leftDigit = digitValueAndLinePosition(line::indexOf)
+                    .minWith(Comparator.comparing(Pair<Int, Int>::second))
+                    .first
+                val rightDigit = digitValueAndLinePosition(line::lastIndexOf)
+                    .maxWith(Comparator.comparing(Pair<Int, Int>::second))
+                    .first
+                leftDigit.toString() + rightDigit
             }
             .sumOf(String::toInt)
     )
+
+    // Correct result is: 56017
 }

@@ -7,11 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="support" />
+        <module name="day02" />
         <module name="day01" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="advent-of-code-2023" target="1.5" />
+      <module name="root" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -9,7 +9,7 @@
     <relativePath>./parent</relativePath>
   </parent>
 
-  <artifactId>root</artifactId>
+  <artifactId>advent-of-code-2023</artifactId>
   <packaging>pom</packaging>
 
   <name>Advent of Code 2023 - Root</name>
@@ -31,6 +31,7 @@
     <module>parent</module>
     <module>support</module>
     <module>day01</module>
+    <module>day02</module>
   </modules>
 
 </project>
