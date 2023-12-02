@@ -19,7 +19,7 @@ private fun digitValueAndLinePosition(indexFn: (String) -> Int) =
 
 fun main() {
     println(
-        readResourceLines("input")!!
+        readResourceLines("input")
             .map { line ->
                 val leftDigit = digitValueAndLinePosition(line::indexOf)
                     .minWith(Comparator.comparing(Pair<Int, Int>::second))

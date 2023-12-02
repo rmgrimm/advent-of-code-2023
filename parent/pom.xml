@@ -11,7 +11,7 @@
   <description><![CDATA[
   ]]></description>
 
-  <inceptionYear>2022</inceptionYear>
+  <inceptionYear>2023</inceptionYear>
 
   <developers>
     <developer>
@@ -21,8 +21,6 @@
       <url>https://fwmotion.com</url>
       <roles>
         <role>owner</role>
-        <role>maintainer</role>
-        <role>architect</role>
         <role>developer</role>
       </roles>
     </developer>
@@ -32,78 +30,17 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.sourceEncoding>UTF-8</project.reporting.sourceEncoding>
 
-    <!-- Some properties to help Quarkus understand the project structure -->
-    <maven.repo.local>
-      ${settings.localRepository}
-    </maven.repo.local>
-    <maven.top-level-basedir>
-      ${project.basedir}/..
-    </maven.top-level-basedir>
-    <quarkus.bootstrap.effective-model-builder>
-      true
-    </quarkus.bootstrap.effective-model-builder>
-    <quarkus.bootstrap.workspace-discovery>
-      true
-    </quarkus.bootstrap.workspace-discovery>
-
     <!-- Compiler/Build-Tool Versions -->
     <maven.compiler.release>21</maven.compiler.release>
     <version.kotlin>1.9.21</version.kotlin>
 
-    <!-- Quarkus -->
-    <version.quarkus>3.6.0</version.quarkus>
-
-    <!-- Maven First-party Plugins -->
-    <version.maven-antrun-plugin>3.1.0</version.maven-antrun-plugin>
-    <version.maven-assembly-plugin>3.6.0</version.maven-assembly-plugin>
-    <version.maven-clean-plugin>3.3.2</version.maven-clean-plugin>
-    <version.maven-compiler-plugin>3.11.0</version.maven-compiler-plugin>
-    <version.maven-dependency-plugin>3.6.1</version.maven-dependency-plugin>
-    <version.maven-deploy-plugin>3.1.1</version.maven-deploy-plugin>
-    <version.maven-enforcer-plugin>3.4.1</version.maven-enforcer-plugin>
-    <version.maven-failsafe-plugin>3.2.1</version.maven-failsafe-plugin>
-    <version.maven-help-plugin>3.4.0</version.maven-help-plugin>
-    <version.maven-install-plugin>3.1.1</version.maven-install-plugin>
-    <version.maven-jar-plugin>3.3.0</version.maven-jar-plugin>
-    <version.maven-resources-plugin>3.3.1</version.maven-resources-plugin>
-    <version.maven-surefire-plugin>3.2.1</version.maven-surefire-plugin>
-    <version.maven-wrapper-plugin>3.2.0</version.maven-wrapper-plugin>
-
     <!-- Third-party Plugins -->
-    <version.build-helper-maven-plugin>3.4.0</version.build-helper-maven-plugin>
     <version.depgraph-maven-plugin>4.0.2</version.depgraph-maven-plugin>
-    <version.jandex-maven-plugin>3.1.5</version.jandex-maven-plugin>
-    <version.openapi-generator-maven-plugin>7.0.1</version.openapi-generator-maven-plugin>
-    <version.properties-maven-plugin>1.2.1</version.properties-maven-plugin>
-
-    <!-- Other dependency versions -->
-    <version.hibernate>6.2.1.Final</version.hibernate>
-    <version.junit>5.10.0</version.junit>
-    <version.lombok>1.18.30</version.lombok>
-    <version.mockito>5.7.0</version.mockito>
-    <version.swagger-annotations>1.6.12</version.swagger-annotations>
-    <version.word-wrap>0.1.12</version.word-wrap>
   </properties>
 
   <dependencyManagement>
     <dependencies>
-      <!-- BOM imports -->
-      <dependency>
-        <groupId>io.quarkus.platform</groupId>
-        <artifactId>quarkus-bom</artifactId>
-        <version>${version.quarkus}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>${version.junit}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <!-- Related Dependencies -->
+      <!-- Reactor Dependencies -->
       <dependency>
         <groupId>com.github.rmgrimm.adventofcode2023</groupId>
         <artifactId>support</artifactId>
@@ -115,14 +52,6 @@
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-stdlib-jdk8</artifactId>
         <version>${version.kotlin}</version>
-      </dependency>
-
-      <!-- Testing dependencies -->
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-junit-jupiter</artifactId>
-        <version>${version.mockito}</version>
-        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -137,180 +66,6 @@
           <groupId>com.github.ferstl</groupId>
           <artifactId>depgraph-maven-plugin</artifactId>
           <version>${version.depgraph-maven-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>io.quarkus.platform</groupId>
-          <artifactId>quarkus-maven-plugin</artifactId>
-          <version>${version.quarkus}</version>
-          <extensions>true</extensions>
-          <executions>
-            <execution>
-              <id>default-generate-code</id>
-              <phase>generate-sources</phase>
-              <goals>
-                <goal>generate-code</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>default-generate-code-tests</id>
-              <phase>generate-test-sources</phase>
-              <goals>
-                <goal>generate-code-tests</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>default-build</id>
-              <phase>package</phase>
-              <goals>
-                <goal>build</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>io.smallrye</groupId>
-          <artifactId>jandex-maven-plugin</artifactId>
-          <version>${version.jandex-maven-plugin}</version>
-
-          <executions>
-            <execution>
-              <id>make-index</id>
-              <phase>process-classes</phase>
-              <goals>
-                <goal>jandex</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>${version.maven-antrun-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-artifact-plugin</artifactId>
-          <version>${version.maven-artifact-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>${version.maven-assembly-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>${version.maven-clean-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>${version.maven-compiler-plugin}</version>
-          <executions>
-            <execution>
-              <id>default-compile</id>
-              <phase>compile</phase>
-              <goals>
-                <goal>compile</goal>
-              </goals>
-              <configuration>
-                <release>${maven.compiler.release}</release>
-                <showCompilationChanges>false</showCompilationChanges>
-                <showDeprecation>true</showDeprecation>
-                <showWarnings>true</showWarnings>
-                <compilerArgs>
-                  <arg>-parameters</arg>
-                </compilerArgs>
-              </configuration>
-            </execution>
-            <execution>
-              <id>default-testCompile</id>
-              <phase>test-compile</phase>
-              <goals>
-                <goal>testCompile</goal>
-              </goals>
-              <configuration>
-                <release>${maven.compiler.release}</release>
-                <compilerArgs>
-                  <arg>-parameters</arg>
-                </compilerArgs>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-failsafe-plugin</artifactId>
-          <version>${version.maven-failsafe-plugin}</version>
-
-          <configuration>
-            <useModulePath>false</useModulePath>
-
-            <systemPropertyVariables>
-              <java.util.logging.manager>
-                org.jboss.logmanager.LogManager
-              </java.util.logging.manager>
-              <!--suppress MavenModelInspection -->
-              <maven.home>${maven.home}</maven.home>
-              <maven.repo.local>${settings.localRepository}</maven.repo.local>
-              <!--suppress MavenModelInspection -->
-              <maven.top-level-basedir>${session.topLevelProject.basedir.absolutePath}</maven.top-level-basedir>
-              <quarkus.bootstrap.effective-model-builder>true</quarkus.bootstrap.effective-model-builder>
-            </systemPropertyVariables>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>${version.maven-jar-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-help-plugin</artifactId>
-          <version>${version.maven-help-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>${version.maven-install-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>${version.maven-resources-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${version.maven-surefire-plugin}</version>
-          <configuration>
-            <systemPropertyVariables>
-              <java.util.logging.manager>
-                org.jboss.logmanager.LogManager
-              </java.util.logging.manager>
-              <!--suppress MavenModelInspection -->
-              <maven.home>${maven.home}</maven.home>
-              <maven.repo.local>${settings.localRepository}</maven.repo.local>
-              <!--suppress MavenModelInspection -->
-              <maven.top-level-basedir>${session.topLevelProject.basedir.absolutePath}</maven.top-level-basedir>
-              <quarkus.bootstrap.effective-model-builder>true</quarkus.bootstrap.effective-model-builder>
-            </systemPropertyVariables>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-wrapper-plugin</artifactId>
-          <version>${version.maven-wrapper-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>build-helper-maven-plugin</artifactId>
-          <version>${version.build-helper-maven-plugin}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>properties-maven-plugin</artifactId>
-          <version>${version.properties-maven-plugin}</version>
         </plugin>
         <plugin>
           <groupId>org.jetbrains.kotlin</groupId>
@@ -336,89 +91,11 @@
               <goals>
                 <goal>test-compile</goal>
               </goals>
-              <configuration>
-                <compilerPlugins>
-                  <plugin>all-open</plugin>
-                </compilerPlugins>
-
-                <pluginOptions>
-                  <option>
-                    all-open:annotation=io.quarkus.test.junit.QuarkusTest
-                  </option>
-                </pluginOptions>
-              </configuration>
             </execution>
           </executions>
-
-          <dependencies>
-            <dependency>
-              <groupId>org.jetbrains.kotlin</groupId>
-              <artifactId>kotlin-maven-allopen</artifactId>
-              <version>${version.kotlin}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.jetbrains.kotlin</groupId>
-              <artifactId>kotlin-maven-noarg</artifactId>
-              <version>${version.kotlin}</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-        <plugin>
-          <groupId>org.openapitools</groupId>
-          <artifactId>openapi-generator-maven-plugin</artifactId>
-          <version>${version.openapi-generator-maven-plugin}</version>
         </plugin>
       </plugins>
     </pluginManagement>
   </build>
-
-  <profiles>
-    <profile>
-      <id>native</id>
-      <!--
-        Profile to enable native compilation
-      -->
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-
-      <properties>
-        <quarkus.native.container-build>true</quarkus.native.container-build>
-        <quarkus.native.container-runtime>
-          podman-rootless
-        </quarkus.native.container-runtime>
-        <quarkus.package.type>native</quarkus.package.type>
-      </properties>
-
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-failsafe-plugin</artifactId>
-              <version>${version.maven-failsafe-plugin}</version>
-
-              <configuration>
-                <systemPropertyVariables>
-                  <native.image.path>
-                    ${project.build.directory}/${project.build.finalName}-runner
-                  </native.image.path>
-                  <java.util.logging.manager>
-                    org.jboss.logmanager.LogManager
-                  </java.util.logging.manager>
-                  <!--suppress MavenModelInspection -->
-                  <maven.home>${maven.home}</maven.home>
-                  <maven.repo.local>${settings.localRepository}</maven.repo.local>
-                  <!--suppress MavenModelInspection -->
-                  <maven.top-level-basedir>${session.topLevelProject.basedir.absolutePath}</maven.top-level-basedir>
-                  <quarkus.bootstrap.effective-model-builder>true</quarkus.bootstrap.effective-model-builder>
-                </systemPropertyVariables>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-  </profiles>
 
 </project>

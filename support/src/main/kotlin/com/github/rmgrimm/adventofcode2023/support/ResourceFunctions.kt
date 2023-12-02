@@ -12,4 +12,4 @@ fun readResourceLines(
     readResource(name)
         ?.readText(charset)
         ?.lineSequence()
-        ?.filter(String::isNotBlank)
+        ?.filter(String::isNotBlank)!!

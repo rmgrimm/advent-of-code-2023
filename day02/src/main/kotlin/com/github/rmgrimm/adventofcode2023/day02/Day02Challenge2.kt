@@ -1,7 +1,16 @@
 package com.github.rmgrimm.adventofcode2023.day02
 
-fun main() {
-    TODO("Challenges not yet released")
+import com.github.rmgrimm.adventofcode2023.support.readResourceLines
 
-    // Correct result is: ???
+fun main() {
+    println(
+        readResourceLines("input")
+            .map(::parseColoredCubeGame)
+            .map { (_, cubeCounts) ->
+                cubeCounts.values.reduce(Int::times)
+            }
+            .sum()
+    )
+
+    // Correct answer is: 87984
 }

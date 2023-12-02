@@ -4,7 +4,7 @@ import com.github.rmgrimm.adventofcode2023.support.readResourceLines
 
 fun main() {
     println(
-        readResourceLines("input")!!
+        readResourceLines("input")
             .map { line ->
                 line.first(Char::isDigit).toString() +
                     line.last(Char::isDigit)
