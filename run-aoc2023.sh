@@ -16,7 +16,7 @@ run_aoc_day() {
   fi
 
   if [ ! -r day"$DAY"/target/day"$DAY"-1.0.0-SNAPSHOT.jar ]; then
-    echo Building Day "$DAY"...
+    echo Building day "$DAY" solutions...
     ./mvnw --quiet package --projects day"$DAY" --also-make
   fi
 
@@ -28,7 +28,7 @@ run_aoc_day() {
 }
 
 if [ "$#" = "0" ]; then
-  echo Building all days first...
+  echo Building all day solutions first...
   ./mvnw --quiet package
   for DAY in day*; do
     run_aoc_day "${DAY##day}"
