@@ -9,7 +9,11 @@
         <module name="day03" />
         <module name="day02" />
         <module name="day01" />
+        <module name="day09" />
+        <module name="day08" />
+        <module name="day07" />
         <module name="support" />
+        <module name="day06" />
         <module name="day05" />
         <module name="day04" />
       </profile>
