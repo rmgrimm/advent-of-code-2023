@@ -18,8 +18,8 @@ data class MappingInstructions(
     val mapTypeBySource = maps.keys.associateBy(MappingType::source)
 }
 
-fun parseSeedsAndMaps(): Pair<List<Long>, MappingInstructions> {
-    val seeds = mutableListOf<Long>()
+fun <T> parseSeedsAndMaps(seedsParse: (List<String>) -> T): Pair<T, MappingInstructions> {
+    val seeds = mutableListOf<String>()
     val maps = mutableMapOf<MappingType, MutableList<MappingInstruction>>()
 
     var state = "unknown"
@@ -56,20 +56,16 @@ fun parseSeedsAndMaps(): Pair<List<Long>, MappingInstructions> {
 
         when (state) {
             "seeds" -> {
-                seeds += data.splitToSequence(' ')
-                    .map(String::trim)
-                    .map(String::toLong)
+                seeds += data
             }
 
             "map" -> {
                 val (target, source, length) = data.split(' ', limit = 3)
                     .map(String::toLong)
-                maps.computeIfAbsent(mappingType) { mutableListOf() }
-                    .add(
-                        MappingInstruction(
-                            sourceRange = source..<(source + length),
-                            targetOffset = target - source
-                        )
+                maps.computeIfAbsent(mappingType) { mutableListOf() } +=
+                    MappingInstruction(
+                        sourceRange = source..<(source + length),
+                        targetOffset = target - source
                     )
             }
 
@@ -77,7 +73,7 @@ fun parseSeedsAndMaps(): Pair<List<Long>, MappingInstructions> {
         }
     }
 
-    return seeds to MappingInstructions(maps = maps)
+    return seedsParse(seeds) to MappingInstructions(maps = maps)
 }
 
 fun performMapping(
@@ -94,7 +90,7 @@ fun performMapping(
             ?: throw IllegalStateException("No mapping from $currentType; cannot continue")
 
         currentValue += instructions.maps[mappingType]
-            ?.firstOrNull{ it.sourceRange.contains(currentValue) }
+            ?.firstOrNull { currentValue in it.sourceRange }
             ?.targetOffset
             ?: 0
         currentType = mappingType.destination
@@ -104,19 +100,28 @@ fun performMapping(
 }
 
 fun main() {
-    val (seeds, instructions) = parseSeedsAndMaps()
+    val (seeds, instructions) = parseSeedsAndMaps { seedList ->
+        seedList.asSequence()
+            .flatMap { seedLine ->
+                seedLine.splitToSequence(' ')
+                    .map(String::trim)
+                    .map(String::toLong)
+            }
+    }
 
     println(
-        seeds.asSequence()
-        .map { seed -> performMapping(
-            instructions = instructions,
-            value = seed,
-            source = "seed",
-            destination = "location"
+        seeds
+            .map { seed ->
+                performMapping(
+                    instructions = instructions,
+                    value = seed,
+                    source = "seed",
+                    destination = "location"
 
-        ) }
-        .min()
+                )
+            }
+            .min()
     )
 
-    // The correct answer is: ???
+    // The correct answer is: 31599214
 }
