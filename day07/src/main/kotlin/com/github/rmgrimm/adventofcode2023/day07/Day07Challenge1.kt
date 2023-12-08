@@ -74,4 +74,6 @@ fun main() {
             .mapIndexed { index, bid -> (index + 1) * bid }
             .sum()
     )
+
+    // The correct answer is: 245794640
 }
