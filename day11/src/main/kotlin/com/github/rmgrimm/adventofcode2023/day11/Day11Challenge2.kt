@@ -1,13 +1,17 @@
 package com.github.rmgrimm.adventofcode2023.day11
 
-import com.github.rmgrimm.adventofcode2023.support.readResourceLines
+import kotlin.math.abs
 
 fun main() {
-    println(
-        readResourceLines("input")
-            .ifEmpty { sequenceOf("TODO") }
-            .first()
-    )
+    val expandedUniverse = readUniverse("input")
+        .expandUniverse(999_999)
 
-    // The correct answer is: ???
+    val galaxyPairs = findGalaxyPairs(expandedUniverse)
+
+    println(galaxyPairs.sumOf { (fromGalaxy, toGalaxy) ->
+        abs(toGalaxy.y - fromGalaxy.y) +
+            abs(toGalaxy.x - fromGalaxy.x)
+    })
+
+    // The correct answer is: 648458253817
 }
