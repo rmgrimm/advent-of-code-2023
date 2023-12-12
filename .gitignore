@@ -8,6 +8,7 @@ pom.xml.tag
 
 /.idea/modules.xml
 *.iml
+.attach_pid*
 
 target/
 !**/src/main/**/target/

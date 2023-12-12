@@ -68,12 +68,12 @@ Day numbers may be specified to the convenience script to limit which challenges
 .. link:day11/src/main/kotlin/com/github/rmgrimm/adventofcode2023/day11/Day11Challenge1.kt[Challenge 1]
 .. link:day11/src/main/kotlin/com/github/rmgrimm/adventofcode2023/day11/Day11Challenge2.kt[Challenge 2]
 
-////
 . Day 12
 .. link:day12/src/main/resources/input[Input]
 .. link:day12/src/main/kotlin/com/github/rmgrimm/adventofcode2023/day12/Day12Challenge1.kt[Challenge 1]
 .. link:day12/src/main/kotlin/com/github/rmgrimm/adventofcode2023/day12/Day12Challenge2.kt[Challenge 2]
 
+////
 . Day 13
 .. link:day13/src/main/resources/input[Input]
 .. link:day13/src/main/kotlin/com/github/rmgrimm/adventofcode2023/day13/Day13Challenge1.kt[Challenge 1]
